@@ -5,7 +5,7 @@ DATA_DIR = "facility-location/data/"
 
 if __name__ == "__main__":
     # file path to the dataset
-    datafile = DATA_DIR + "p1"
+    datafile = DATA_DIR + "p26"
 
     # Read the dataset from the file
     data = read_dataset(datafile)
@@ -17,6 +17,7 @@ if __name__ == "__main__":
     print("Objective value:    ", solution.objective_value)
     print("Open facilities:    ", [j for j in data.J if solution.locations[j] > 0.5])
     print("Solution time (sec):", solution.solution_time)
-    print("No. of optimality cuts generated:", solution.num_cuts_mip)
-    print("No. of optimality cuts generated (at node relaxation):", solution.num_cuts_rel)
+    print("No. of BD cuts generated:", solution.num_cuts_mip_rel)
+    print("No. of int_L_shape cuts generated:", solution.num_cuts_mip_int_L_shape)
+    print("No. of BD cuts generated (at node relaxation):", solution.num_cuts_rel)
     print("No. of explored Branch-and-Bound nodes:", solution.num_bnb_nodes)

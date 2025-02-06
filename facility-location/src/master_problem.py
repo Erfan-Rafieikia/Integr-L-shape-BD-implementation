@@ -4,13 +4,13 @@ from callbacks import Callback
 from data import Data
 from gurobipy import GRB, Model, quicksum
 
-
 @dataclass
 class Solution:
     objective_value: float
     locations: list
     solution_time: float
-    num_cuts_mip: int
+    num_cuts_mip_rel: int
+    num_cuts_mip_int_L_shape: int
     num_cuts_rel: int
     num_bnb_nodes: int = 0
 
@@ -86,10 +86,11 @@ def solve_CFLP(dat: Data, write_mp_lp=False) -> Solution:
         y_values = mod.getAttr("x", y)
 
         # Get the number of cuts
-        num_cuts_mip = callback.num_cuts_mip
+        num_cuts_mip_rel = callback.num_cuts_mip_rel
+        num_cuts_mip_int_L_shape = callback.num_cuts_mip_int_L_shape
         num_cuts_rel = callback.num_cuts_rel
 
         # Get the number of explored Branch-and-Bound nodes
         num_bnb_nodes = int(mod.NodeCount)
 
-    return Solution(obj, y_values, sol_time, num_cuts_mip, num_cuts_rel, num_bnb_nodes)
+    return Solution(obj, y_values, sol_time, num_cuts_mip_rel,num_cuts_mip_int_L_shape, num_cuts_rel, num_bnb_nodes)
